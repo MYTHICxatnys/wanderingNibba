@@ -1,26 +1,53 @@
-import { useState } from "react";
-import { CAMPSITES } from '../shared/campsites';
+//import { useState } from "react";
+//import { CAMPSITES } from '../shared/campsites';
 import DirectoryScreen from './DirectoryScreen';
-import { View } from "react-native";
+import { Platform, View } from "react-native";
+import Constants from 'expo-constants';
+import { createStackNavigator } from '@react-navigation/stack';
 import CampsiteInfoScreen from "./CampsiteInfoScreen";
 
-const Main = () => {
-    const [campsites, setCampsites] = useState(CAMPSITES);
-    const [selectedCampsiteId, setSelectedCampsiteId] = useState();
+const DirectoryNavigator = () => {
+    const Stack = createStackNavigator();
 
     return (
-        <View style={{ flex: 1 }}>
-            <DirectoryScreen
-                campsites={campsites}
-                onPress={(campsiteId) => setSelectedCampsiteId(campsiteId)}
+        <Stack.Navigator
+            initialRouteName='Directory'
+            screenOptions={{
+                headerStyle: {
+                    backgroundColor: '#5637DD'
+                },
+                headerTintColor: '#fff'
+            }}
+        >
+            <Stack.Screen
+                name='Directory'
+                component={DirectoryScreen}
+                options={{ title: 'Campsite Directory' }}
             />
-            <CampsiteInfoScreen
-                campsite={
-                    campsites.filter(
-                        (campsite) => campsite.id === selectedCampsiteId
-                    )[0]
-                }
+            <Stack.Screen
+                name='CampsiteInfo'
+                component={CampsiteInfoScreen}
+                options={({ route }) => ({
+                    title: route.params.campsite.name
+                })}
             />
+        </Stack.Navigator>
+    )
+}
+
+const Main = () => {
+    //const [campsites, setCampsites] = useState(CAMPSITES);
+    //const [selectedCampsiteId, setSelectedCampsiteId] = useState();
+
+    return (
+        <View
+            style={{
+                flex: 1,
+                paddingTop:
+                    Platform.OS === 'ios' ? 0 : Constants.statusBarHeight
+            }}
+        >
+            <DirectoryNavigator />
         </View>
     );
 };
