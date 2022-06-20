@@ -6,6 +6,15 @@ const RenderCampsite = (props) => {
     if (campsite) {
         return (
             <Card containerStyle={styles.cardContainer} >
+
+                <Card.Image source={campsite.image}>
+                    <View style={{ justifyContent: 'center', flex: 1 }}>
+                        <Text style={{ color: 'white', textAlign: 'center', fontSize: 20 }}>
+                            {campsite.name}
+                        </Text>
+                    </View>
+                </Card.Image>
+                <Text style={{ margin: 20 }}>{campsite.description}</Text>
                 <Icon
                     name={props.isFavorite ? 'heart' : 'heart-o'}
                     type="font-awesome"
@@ -18,14 +27,6 @@ const RenderCampsite = (props) => {
                             : props.markFavorite()
                     }
                 />
-                <Card.Image source={campsite.image}>
-                    <View style={{ justifyContent: 'center', flex: 1 }}>
-                        <Text style={{ color: 'white', textAlign: 'center', fontSize: 20 }}>
-                            {campsite.name}
-                        </Text>
-                    </View>
-                </Card.Image>
-                <Text style={{ margin: 20 }}>{campsite.description}</Text>
             </Card>
         );
     }
