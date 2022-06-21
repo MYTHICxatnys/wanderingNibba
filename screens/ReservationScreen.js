@@ -24,10 +24,6 @@ const ReservationScreen = () => {
 
         setShowModal(!showModal);
 
-        setCampers(1);
-        setHikeIn(false);
-        setDate(new Date());
-        setShowCalendar(false);
     }
 
     const resetForm = () => {
@@ -110,7 +106,7 @@ const ReservationScreen = () => {
                         Hike-In?: {hikeIn ? 'Yes' : 'No'}
                     </Text>
                     <Text style={styles.modalText}>
-                        Date: {date.toLocaleTimeString('en-US')}
+                        Date: {date.toLocaleDateString('en-US')}
                     </Text>
 
                     <Button
