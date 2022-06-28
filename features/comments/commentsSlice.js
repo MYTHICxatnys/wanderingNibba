@@ -1,5 +1,8 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { baseUrl } from '../../shared/baseUrl';
+import DateTimePicker from '@react-native-community/datetimepicker';
+import { Dispatch } from 'react';
+
 
 export const fetchComments = createAsyncThunk(
     'comments/fetchComments',
@@ -9,10 +12,31 @@ export const fetchComments = createAsyncThunk(
     }
 );
 
+export const postComment = createAsyncThunk(
+    'comments/postComment',
+    async (payload, { dispatch, getState }) => {
+        setTimeout(() => {
+            const { comments } = getState();
+            const date = new Date();
+            const id = toString(comments.commentsArray.length);
+            payload.date = date.toLocaleString();
+            payload.id = toString(id);
+
+
+
+            dispatch(addComment(payload));
+        }, 2000);
+    }
+);
+
 const commentsSlice = createSlice({
     name: 'comments',
     initialState: { isLoading: true, errMess: null, commentsArray: [] },
-    reducers: {},
+    reducers: {
+        addComment: (state, action) => {
+            state.commentsArray.push(action.payload)
+        }
+    },
     extraReducers: {
         [fetchComments.pending]: (state) => {
             state.isLoading = true;
@@ -28,5 +52,5 @@ const commentsSlice = createSlice({
         }
     }
 });
-
+export const { addComment } = commentsSlice.actions;
 export const commentsReducer = commentsSlice.reducer;

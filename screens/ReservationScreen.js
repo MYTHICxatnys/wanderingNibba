@@ -95,7 +95,7 @@ const ReservationScreen = () => {
                 visible={showModal}
                 onRequestClose={() => setShowModal(!showModal)}
             >
-                <View style={styles.Modal}>
+                <View style={styles.modal}>
                     <Text style={styles.modalTitle}>
                         Search Campsite Reservations
                     </Text>
